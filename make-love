@@ -10,18 +10,18 @@ if [ -z $filename ]
 fi
 
 # Create .love file
-zip -r ./build/game.love . -x .\* -x \*.app\* -x \*.love\* \*build\*
+zip -r ./build/$filename.love . -x .\* -x \*.app\* -x \*.love\* \*build\*
 
 # Copy love executables
 ditto ~/.love/love.app ./build/$filename.app
 ditto ~/.love/windows ./build/$filename
 
+# Create win app
+cat ./build/$filename/love.exe ./build/$filename.love > ./build/$filename/$filename.exe
+
 # Create mac app
 cp ./build/$filename.love ./build/$filename.app/Contents/Resources/
 subl ./build/$filename.app/Contents/Info.plist
-
-# Create win app
-cat ./build/$filename/love.exe ./build/$filename.love > ./build/$filename/$filename.exe
 
 echo "Compress files into zips? (y|N)"
 read input
